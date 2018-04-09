@@ -1,9 +1,7 @@
-const showMsg = (that, close, msg, type) => {
+export const showMsg = (that, isClose, msg, type) => {
   that.$message({
-    showClose: close,
+    showClose: isClose,
     message: msg,
     type: type
   })
 }
-
-export default showMsg

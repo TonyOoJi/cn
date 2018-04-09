@@ -9,8 +9,8 @@
         <el-form-item prop="userName">
           <el-input type="userName" v-model="loginForm.userName" placeholder="账号"></el-input>
         </el-form-item>
-        <el-form-item prop="pwd">
-          <el-input v-model="loginForm.pwd" placeholder="密码" type="password"></el-input>
+        <el-form-item prop="psd">
+          <el-input v-model="loginForm.psd" placeholder="密码" type="password"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="submitForm('loginForm')" class="submitBtn">登录</el-button>
@@ -26,7 +26,7 @@
 <script>
 import abe from '../../api/axios_back_end'
 // import store from '../../vuex/store'
-import util from '../../common/utils/util'
+import {showMsg} from '../../common/utils/util'
 import router from '../../router'
 
 export default {
@@ -35,14 +35,14 @@ export default {
     return {
       loginForm: {
         userName: '',
-        pwd: ''
+        psd: ''
       },
       loginRule: {
         userName: [
           { required: true, message: '请输入用户名', trigger: 'blur' },
           { min: 3, max: 10, message: '长度在 3 - 10 个字符', trigger: 'blur' }
         ],
-        pwd: [
+        psd: [
           { required: true, message: '请输入密码', trigger: 'blur' },
           { min: 3, max: 20, message: '长度在 3 - 20 个字符', trigger: 'blur' }
         ]
@@ -57,7 +57,7 @@ export default {
           /* 通过校验之后的submit方法块 */
           var data = {
             'usr': this.loginForm.userName,
-            'pwd': this.loginForm.pwd
+            'psd': this.loginForm.psd
           }
           this.doLogin(this, data)
         } else {
@@ -68,14 +68,15 @@ export default {
     doLogin (that, data) {
       abe.login(data).then(res => {
         if (res.data.code === 0) {
-          sessionStorage.setItem('accessToken', res.data.access_token)
-          sessionStorage.setItem('username', res.data.data.username)
-          sessionStorage.setItem('uid', res.data.data._id)
+          // console.log(res.data.accessToken)
+          sessionStorage.setItem('accessToken', res.data.accessToken)
+          sessionStorage.setItem('username', res.data.username)
+          sessionStorage.setItem('uid', res.data.uid)
           // store.dispatch('showLogin')
-          util.showMsg(that, true, '登录成功', 'success')
+          showMsg(that, true, '登录成功', 'success')
           router.push({path: '/cn/index', params: { username: res.data.username }})
         } else {
-          util.showMsg(that, true, '登录失败，账号或密码错误', 'error')
+          showMsg(that, true, '登录失败，账号或密码错误', 'error')
         }
       }).catch(err => {
         console.log(err)
