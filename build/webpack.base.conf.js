@@ -51,13 +51,13 @@ module.exports = {
         loader: 'babel-loader',
         include: [resolve('src'), resolve('test'), resolve('node_modules/webpack-dev-server/client')]
       },
+      // {
+      //   test: /\.css$/,
+      //   loader: ['style-loader','css-loader']
+      // },
       {
-        test: /\.css$/,
-        // include: [
-        //   /src/,//表示在src目录下的css需要编译
-        //   '/node_modules/element-ui/lib/'   //增加此项
-        // ],
-        loader: 'style-loader!css-loader'
+        test: /\.(eot|woff|ttf)$/,
+        loader: 'file-loader'
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,

@@ -25,9 +25,12 @@
 
 <script>
 import abe from '../../api/axios_back_end'
+// import store from '../../vuex/store'
+import util from '../../common/utils/util'
+import router from '../../router'
 
 export default {
-  name: 'Login', 
+  name: 'Login',
   data () {
     return {
       loginForm: {
@@ -48,13 +51,15 @@ export default {
   },
   methods: {
     submitForm (formName) {
-      this.$refs[formName].validate((valid) => {  //饿了么的element就是这样写的
-        if (valid) {  //通过校验之后的submit方法块
+      this.$refs[formName].validate((valid) => {
+        /* 饿了么的element就是这样写的 */
+        if (valid) {
+          /* 通过校验之后的submit方法块 */
           var data = {
             'usr': this.loginForm.userName,
             'pwd': this.loginForm.pwd
           }
-          doLogin(this, data)
+          this.doLogin(this, data)
         } else {
           return false
         }
@@ -63,14 +68,14 @@ export default {
     doLogin (that, data) {
       abe.login(data).then(res => {
         if (res.data.code === 0) {
-        sessionStorage.setItem('accessToken', res.data.access_token)
-        sessionStorage.setItem('username', res.data.data.username)
-        sessionStorage.setItem('uid', res.data.data._id)
-        store.dispatch('showLogin')
-        showMsg(that, true, '登录成功', 'success')
-        router.push({path: '/p/index', params: { username: res.data.username }})
+          sessionStorage.setItem('accessToken', res.data.access_token)
+          sessionStorage.setItem('username', res.data.data.username)
+          sessionStorage.setItem('uid', res.data.data._id)
+          // store.dispatch('showLogin')
+          util.showMsg(that, true, '登录成功', 'success')
+          router.push({path: '/cn/index', params: { username: res.data.username }})
         } else {
-          showMsg(that, true, '登录失败，账号或密码错误', 'error')
+          util.showMsg(that, true, '登录失败，账号或密码错误', 'error')
         }
       }).catch(err => {
         console.log(err)
