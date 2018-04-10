@@ -2,7 +2,7 @@
   <div class="loginWrapper">
     <div class="hd">
       <h2>cn</h2>
-      <p>CLOUDNOTE-记录正在发生</p>
+      <p>CLOUDNOTE-Record every inspiration.</p>
     </div>
     <div class="bd">
       <el-form :model="loginForm" :rules="loginRule" ref="loginForm">
@@ -68,7 +68,6 @@ export default {
     doLogin (that, data) {
       abe.login(data).then(res => {
         if (res.data.code === 0) {
-          // console.log(res.data.accessToken)
           sessionStorage.setItem('accessToken', res.data.accessToken)
           sessionStorage.setItem('username', res.data.username)
           sessionStorage.setItem('uid', res.data.uid)
