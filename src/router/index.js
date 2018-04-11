@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Axios from 'axios'
 import API from '../api/resources'
 import Login from '@/components/login/Login'
+import Register from '@/components/login/Register'
 
 Vue.use(Router)
 
@@ -12,6 +13,11 @@ export default new Router({
       path: '/',
       name: 'Login',
       component: Login
+    },
+    {
+      path: '/register',
+      name: 'Register',
+      component: Register
     },
     {
       path: '/cn/index',

@@ -55,10 +55,10 @@ module.exports = {
       //   test: /\.css$/,
       //   loader: ['style-loader','css-loader']
       // },
-      {
-        test: /\.(eot|woff|ttf)$/,
-        loader: 'file-loader'
-      },
+      // {
+      //   test: /\.(eot|woff|ttf)$/,
+      //   loader: 'file-loader'
+      // },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
         loader: 'url-loader',
