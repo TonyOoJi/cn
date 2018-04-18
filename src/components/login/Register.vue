@@ -15,14 +15,14 @@
         <el-form-item prop="checkPwd">
           <el-input v-model="registerForm.checkPwd" placeholder="请再次输入密码" type="password"></el-input>
         </el-form-item>
-        <el-form-item prop="email">
+        <!-- <el-form-item prop="email">
           <el-input v-model="registerForm.email" placeholder="请输入接收验证码的邮箱"></el-input>
         </el-form-item>
         <el-form-item prop="captcha">
           <el-input v-model="registerForm.captcha" placeholder="请输入验证码">
             <el-button slot="append" @click='getCaptcha'>{{ captchaMsg }}</el-button>
           </el-input>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item>
           <el-button type="primary" @click="submitForm('registerForm')" class="submitBtn">立即注册</el-button>
         </el-form-item>
@@ -41,7 +41,7 @@ import store from '../../vuex/store'
 import router from '../../router'
 
 export default {
-  name: 'register',
+  name: 'Register',
   data () {
     var validateUser = (rule, value, cb) => {
       var pattern = /^[\w\u4e00-\u9fa5]{3,10}$/g
@@ -79,9 +79,9 @@ export default {
       registerForm: {
         userName: '',
         pwd: '',
-        checkPwd: '',
-        email: '',
-        captcha: ''
+        checkPwd: ''
+        // email: '',
+        // captcha: ''
       },
       registerRule: {
         userName: [
@@ -92,14 +92,14 @@ export default {
         ],
         checkPwd: [
           { validator: validateCheckPwd, trigger: 'blur' }
-        ],
-        email: [
-          { required: true, message: '请输入邮箱地址', trigger: 'blur' },
-          { type: 'email', message: '请输入正确的邮箱地址', trigger: 'blur,change' }
-        ],
-        captcha: [
-          { required: true, message: '请输入验证码', trigger: 'blur' }
         ]
+        // email: [
+        //   { required: true, message: '请输入邮箱地址', trigger: 'blur' },
+        //   { type: 'email', message: '请输入正确的邮箱地址', trigger: 'blur,change' }
+        // ],
+        // captcha: [
+        //   { required: true, message: '请输入验证码', trigger: 'blur' }
+        // ]
       }
     }
   },
@@ -114,10 +114,10 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           let data = {
-            'usr': this.registerForm.userName,
-            'pwd': this.registerForm.pwd,
-            'email': this.registerForm.email,
-            'captcha': this.registerForm.captcha
+            'username': this.registerForm.userName,
+            'password': this.registerForm.pwd
+            // 'email': this.registerForm.email,
+            // 'captcha': this.registerForm.captcha
           }
           this.doRegister(this, data)
         } else {
@@ -139,12 +139,12 @@ export default {
     },
     doRegister (that, data) {
       abe.register(data).then(res => {
-        if (res.data.code === 0) {
+        if (res.data.code === '0') {
           showMsg(that, true, '注册成功', 'success')
           router.push({name: 'Login'})
-        } else if (res.data.code === 88) {
+        } else if (res.data.code === '4') {
           showMsg(that, true, '验证码错误', 'error')
-        } else if (res.data.code === 99) {
+        } else if (res.data.code === '69') {
           showMsg(that, true, '用户名已被注册', 'error')
         }
       }).catch(err => {
