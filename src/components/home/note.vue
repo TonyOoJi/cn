@@ -1,16 +1,35 @@
 <template>
-  <el-container>
-    <el-header>Header</el-header>
-    <el-container>
-      <el-aside width="200px">Aside</el-aside>
-      <el-main>
-        Main
-      </el-main>
-      <el-container>
-        <el-footer>Footer</el-footer>
-      </el-container>
-    </el-container>
-  </el-container>
+  <div class="all">
+    <!-- 头部导航 -->
+    <el-row class="header-row">
+      <el-col :span="24" class="header-col">
+        <div class="grid-content bg-dark"></div>
+      </el-col>
+    </el-row>
+
+    <!-- main -->
+    <div class="main">
+      <!-- 路径导航 -->
+      <el-row class="breadcrumb-row">
+        <el-col :span="24" class="breadcrumb-col">
+          <div class="grid-content bg-light"></div>
+        </el-col>
+      </el-row>
+
+      <!-- 工作区域 -->
+      <el-row class="work-area">
+        <!-- aside -->
+        <el-col :span="5" class="aside-col">
+          <div class="aside"></div>
+        </el-col>
+
+        <!-- editer -->
+        <el-col :span="19" class="editer-col">
+          <div class="editer .bg-dark"></div>
+        </el-col>
+      </el-row><!-- 工作区域 -->
+    </div><!-- main -->
+  </div>
 </template>
 <script>
 export default {
@@ -29,37 +48,53 @@ export default {
 }
 </script>
 <style scoped>
-.el-header, .el-footer {
-    background-color: #B3C0D1;
-    color: #333;
-    text-align: center;
-    line-height: 60px;
+.all {
+  height: 100%;
 }
-
-.el-aside {
-    background-color: #D3DCE6;
-    color: #333;
-    text-align: center;
-    line-height: 200px;
+.header-row {
+  height: 7%;
 }
-
-.el-main {
-    background-color: #E9EEF3;
-    color: #333;
-    text-align: center;
-    line-height: 160px;
+.header-col {
+  height: 100%;
 }
-
-body > .el-container {
-    margin-bottom: 40px;
+.grid-content {
+  /* border-radius: 4px; */
+  height: 100%;
 }
-
-.el-container:nth-child(5) .el-aside,
-.el-container:nth-child(6) .el-aside {
-    line-height: 260px;
+.main {
+  height: 93%;
 }
-
-.el-container:nth-child(7) .el-aside {
-    line-height: 320px;
+.breadcrumb-row {
+  height: 6%;
+}
+.breadcrumb-col {
+  height: 100%;
+}
+.work-area {
+  height: 94%;
+}
+.aside-col  {
+  height: 100%;
+}
+.aside {
+  height: 100%;
+  width: 100%;
+  /* border: 0px solid black; */
+  background-color: rgb(217, 217, 243);
+}
+.editer-col {
+  height: 100%;
+}
+.editer {
+  height: 100%;
+  width: 100%;
+  /* border: 0px solid blue; */
+  background-color: rgb(221, 243, 226);
+}
+.bg-dark {
+  background-color: #defdf8;
+}
+.bg-light {
+  background-color: #f8f2f8;
 }
 </style>
