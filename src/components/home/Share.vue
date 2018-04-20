@@ -1,5 +1,5 @@
 <template>
-  <div>asdasdasdasda</div>
+  <div>share</div>
 </template>
 <script>
 export default {

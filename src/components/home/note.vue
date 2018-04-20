@@ -1,14 +1,14 @@
 <template>
   <div class="all">
     <!-- 头部导航 -->
-    <el-row class="header-row">
+    <!-- <el-row class="header-row">
       <el-col :span="24" class="header-col">
         <div class="grid-content bg-dark"></div>
       </el-col>
-    </el-row>
+    </el-row> -->
 
     <!-- main -->
-    <div class="main">
+    <!-- <div class="main"> -->
       <!-- 路径导航 -->
       <el-row class="breadcrumb-row">
         <el-col :span="24" class="breadcrumb-col">
@@ -28,7 +28,7 @@
           <div class="editer .bg-dark"></div>
         </el-col>
       </el-row><!-- 工作区域 -->
-    </div><!-- main -->
+    <!-- main -->
   </div>
 </template>
 <script>
