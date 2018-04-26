@@ -191,7 +191,7 @@ export default {
 }
 .editor {
   height: 100%;
-  width: 100%-3px;
+  width: calc(100% - 3px);
   /* border: 1px solid #000; */
   border-left: 3px solid rgb(229,229,229);
   background-color: rgb(221, 243, 226);
