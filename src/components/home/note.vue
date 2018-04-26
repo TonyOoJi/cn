@@ -37,12 +37,10 @@
           </div>
         </el-col>
 
-        <!-- editer -->
-        <el-col :span="18" class="editer-col">
-          <div class="editer .bg-dark">
-            <div id="editor">
-              <mavonEditor :value="content"/>
-            </div>
+        <!-- editor -->
+        <el-col :span="18" class="editor-col">
+          <div class="editor">
+              <mavonEditor :value="content" class="nn"/>
           </div>
         </el-col>
       </el-row><!-- 工作区域 -->
@@ -148,6 +146,17 @@ export default {
 }
 </script>
 <style scoped>
+.nn {
+  min-height: 300px;
+  min-width: 300px;
+  height: 100%;
+}
+.nn>>>.v-note-op {
+  box-shadow: 0 0px 0px rgba(0,0,0,0.157), 0 0px 0px rgba(0,0,0,0.227);
+}
+.nn>>>.v-note-panel {
+  box-shadow: 0 0px 0px rgba(0,0,0,0.157), 0 0px 0px rgba(0,0,0,0.227);
+}
 .all {
   height: 100%;
 }
@@ -175,15 +184,16 @@ export default {
   width: 100%;
   /* border: 0px solid black; */
   /* background-color: rgb(217, 217, 243); */
-  border: 0 2 0 0px  black
+  /* border: 0 2 0 0px  black */
 }
-.editer-col {
+.editor-col {
   height: 100%;
 }
-.editer {
+.editor {
   height: 100%;
-  width: 100%;
-  /* border: 0px solid blue; */
+  width: 100%-3px;
+  /* border: 1px solid #000; */
+  border-left: 3px solid rgb(229,229,229);
   background-color: rgb(221, 243, 226);
 }
 .bg-dark {
