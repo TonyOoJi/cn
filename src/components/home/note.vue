@@ -28,7 +28,7 @@
                 :data="dirs"
                 node-key="dir_id"
                 :highlight-current="true"
-                :default-expand-all="false"
+                :default-expand-all="true"
                 :expand-on-click-node="true"
                 :render-content="renderContent">
                 </el-tree>
@@ -65,8 +65,10 @@ export default {
       label: '网络有点问题'
     }]
     return {
-      content: '',
+      currentFileId: 0, // 当前的文件id
+      content: '', // 当前显示的内容
       dirCount: 0,
+      fileCount: 0,
       dirs: JSON.parse(JSON.stringify(data))
     }
   },
@@ -89,6 +91,7 @@ export default {
       abe.getDirs(params).then(res => {
         this.dirs = res.data.dirs
         this.dirCount = res.data.dirCount
+        this.fileCount = res.data.fileCount
         // this.fileCount = res.data.fileCount
       }).catch(err => {
         console.log(err)
@@ -99,7 +102,8 @@ export default {
       var params = {
         'username': sessionStorage.getItem('username'),
         'dirs': this.dirs,
-        'dirCount': this.dirCount
+        'dirCount': this.dirCount,
+        'fileCount': this.fileCount
       }
       abe.updateDirs(params).then(res => {
         // alert('success')
@@ -137,7 +141,7 @@ export default {
           <span>
             <el-button size="mini" type="text" on-click={ () => this.show(data) }>ShowMsg</el-button>
             <el-button size="mini" type="text" on-click={ () => this.appendFolder(data) }>appendFolder</el-button>
-            <el-button size="mini" type="text" on-click={ () => this.remove(node, data) }>Delete</el-button>
+            <el-button size="mini" type="text" on-click={ () => this.remove(node, data) }><i class="el-icon-delete"></i></el-button>
           </span>
         </span>
       )

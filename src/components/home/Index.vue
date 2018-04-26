@@ -13,7 +13,7 @@
         </el-menu>
       </el-col>
       <el-col :span="10" class="header-col">
-        <div style="margin:0 auto;">{{usr}}</div>
+        <div style="margin:0 auto;"><span>欢迎：</span>{{usr}}<el-button plain @click="logout()" style="border:0px;margin-left:3%;">退出</el-button></div>
       </el-col>
     </el-row>
 
@@ -30,6 +30,8 @@
 import Note from './Note'
 import Team from './Team'
 import Share from './Share'
+import router from '../../router'
+
 export default {
   name: 'Index',
   components: { Note, Team, Share },
@@ -52,6 +54,7 @@ export default {
 
   },
   methods: {
+
     handleSelect (index, indexPath) {
       if (index === '1') {
         this.NoteStyle.display = ''
@@ -66,6 +69,13 @@ export default {
         this.TeamStyle.display = 'none'
         this.ShareStyle.display = ''
       }
+    },
+
+    logout () {
+      sessionStorage.removeItem('accessToken')
+      sessionStorage.removeItem('username')
+      sessionStorage.removeItem('uid')
+      router.push({path: '/'})
     }
   }
 }
