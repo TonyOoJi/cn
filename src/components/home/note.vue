@@ -27,8 +27,8 @@
                 <el-tree
                 :data="dirs"
                 node-key="dir_id"
-                highlight-current="true"
-                default-expand-all="false"
+                :highlight-current="true"
+                :default-expand-all="false"
                 :expand-on-click-node="true"
                 :render-content="renderContent">
                 </el-tree>
@@ -39,7 +39,11 @@
 
         <!-- editer -->
         <el-col :span="18" class="editer-col">
-          <div class="editer .bg-dark"></div>
+          <div class="editer .bg-dark">
+            <div id="editor">
+              <mavonEditor :value="content"/>
+            </div>
+          </div>
         </el-col>
       </el-row><!-- 工作区域 -->
     <!-- main -->
@@ -47,12 +51,15 @@
 </template>
 <script>
 import abe from '../../api/axios_back_end'
-
+import { mavonEditor } from 'mavon-editor'
 // let dirCount = 1000
 // let fileCount = 1000
 
 export default {
   name: 'Note',
+  components: {
+    mavonEditor
+  },
   data () {
     const data = [{
       id: 1,
@@ -60,6 +67,7 @@ export default {
       label: '网络有点问题'
     }]
     return {
+      content: '',
       dirCount: 0,
       dirs: JSON.parse(JSON.stringify(data))
     }
