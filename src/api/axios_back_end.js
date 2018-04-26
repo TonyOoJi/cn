@@ -13,5 +13,13 @@ export default {
   // 获取验证码
   getCaptcha (data) {
     return Axios.post(API.getCaptcha, data)
+  },
+  // 获取目录数据和count
+  getDirs (data) {
+    return Axios.post(API.getDirs, data)
+  },
+  // 更新目录到后台
+  updateDirs (data) {
+    return Axios.post(API.updateDirs, data)
   }
 }

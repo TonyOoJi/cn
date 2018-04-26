@@ -6,5 +6,7 @@ export default {
   login: `${API_ROOT}/user/login`,
   isLogin: `${API_ROOT}/user/isLogin`,
   register: `${API_ROOT}/user/register`,
-  getCaptcha: `${API_ROOT}/mail/getCaptcha`
+  getCaptcha: `${API_ROOT}/mail/getCaptcha`,
+  getDirs: `${API_ROOT}/dir/getDirsByName`,
+  updateDirs: `${API_ROOT}/dir/updateDirs`
 }
