@@ -52,7 +52,7 @@
         <!-- editor -->
         <el-col :span="18" class="editor-col">
           <div class="editor">
-              <mavonEditor :value="content" class="nn"/>
+              <mavonEditor v-model="content" class="nn" @save=" (value,render) => saveContent() "/>
           </div>
         </el-col>
       </el-row><!-- 工作区域 -->
@@ -216,6 +216,7 @@ export default {
         })
       }
     },
+    // 显示修改编辑框
     showEditDialog (data) {
       this.dialogNewNameVisible = true
       this.tempDirNodeData = data
@@ -239,6 +240,23 @@ export default {
       abe.getFileContent(params).then(res => {
         // alert('success')
         this.content = res.data.content
+      }).catch(err => {
+        console.log(err)
+      })
+    },
+    // 保存
+    saveContent (value, render) {
+      var params = {
+        'username': sessionStorage.getItem('username'),
+        'file_id': this.currentFileId,
+        'content': this.content
+      }
+      abe.updataFile(params).then(res => {
+        // console.log("updata file success.")
+        this.$message({
+          message: '保存成功',
+          type: 'success'
+        })
       }).catch(err => {
         console.log(err)
       })
