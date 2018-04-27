@@ -3,7 +3,7 @@
     <!-- 头部导航 -->
     <el-row class="header-row">
       <el-col :span="6" class="header-col">
-        <div style="margin:0 auto;">cn</div>
+        <div style="margin:0 auto;font-size:222%;"><i class="el-icon-edit-outline"> HelloNote</i></div>
       </el-col>
       <el-col :span="8" class="header-col">
         <el-menu style="margin-top:-4%;" :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">

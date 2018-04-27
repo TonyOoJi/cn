@@ -31,14 +31,17 @@
                     <i class="el-icon-document"></i>
                   </el-button>
                 </p>
-                <el-tree
-                :data="dirs"
-                node-key="dir_id"
-                :highlight-current="true"
-                :default-expand-all="true"
-                :expand-on-click-node="false"
-                :render-content="renderContent">
-                </el-tree>
+                <div class="dir-tree">
+                  <el-tree
+                  :data="dirs"
+                  node-key="dir_id"
+                  :highlight-current="true"
+                  :default-expand-all="true"
+                  :expand-on-click-node="false"
+                  :render-content="renderContent"
+                  class="el-tree-mystyle">
+                  </el-tree>
+                </div>
                 <!-- draggable @node-drop="refreshDirs" -->
               </div>
             </div>
@@ -171,9 +174,8 @@ export default {
     renderContent (h, { node, data, store }) {
       if (data.type === 'folder') {
         return (
-          <span class="custom-tree-node" on-mouseover={ (e) => { e.currentTarget.getElementsByTagName('span')[1].style.display = '' } } on-mouseout={ (e) => { e.currentTarget.getElementsByTagName('span')[1].style.display = 'none' } }>
-            <span>{node.label}</span>
-            <span style="display:none;margin-left:50px;">
+          <span class="custom-tree-node" on-mouseover={ (e) => { e.currentTarget.getElementsByTagName('span')[0].style.display = '' } } on-mouseout={ (e) => { e.currentTarget.getElementsByTagName('span')[0].style.display = 'none' } }>
+            <span style="display:none;margin-left:0px;">
               <el-button size="mini" type="text" on-click={ () => this.appendChildFolder(data) }>
                 <i class="el-icon-news"></i>
               </el-button>
@@ -187,13 +189,13 @@ export default {
                 <i class="el-icon-delete"></i>
               </el-button>
             </span>
+            <span>{node.label}</span>
           </span>
         )
       } else if (data.type === 'file') {
         return (
-          <span class="custom-tree-node" on-mouseover={ (e) => { e.currentTarget.getElementsByTagName('span')[1].style.display = '' } } on-mouseout={ (e) => { e.currentTarget.getElementsByTagName('span')[1].style.display = 'none' } }>
-            <span>{node.label}</span>
-            <span style="display:none;margin-left:50px;">
+          <span class="custom-tree-node" on-mouseover={ (e) => { e.currentTarget.getElementsByTagName('span')[0].style.display = '' } } on-mouseout={ (e) => { e.currentTarget.getElementsByTagName('span')[0].style.display = 'none' } }>
+            <span style="display:none;margin-left:0px;">
               <el-button size="mini" type="text" on-click={ () => this.edit(data) }>
                 <i class="el-icon-edit"></i>
               </el-button>
@@ -201,6 +203,7 @@ export default {
                 <i class="el-icon-delete"></i>
               </el-button>
             </span>
+            <span>{node.label}</span>
           </span>
         )
       }
@@ -250,6 +253,11 @@ export default {
   /* background-color: rgb(217, 217, 243); */
   /* border: 0 2 0 0px  black */
 }
+.dir-tree {
+  height: 450px;
+  overflow: auto;
+  text-align: left;
+}
 .editor-col {
   height: 100%;
 }
@@ -273,5 +281,9 @@ export default {
   justify-content: space-between;
   font-size: 14px;
   padding-right: 8px;
+}
+.el-tree-mystyle {
+  display:inline-block;
+  margin-left: 0px;
 }
 </style>
