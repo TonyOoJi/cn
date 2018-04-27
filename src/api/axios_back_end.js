@@ -25,5 +25,9 @@ export default {
   // 增加文件
   addFile (data) {
     return Axios.post(API.addFile, data)
+  },
+  // 获取文件的内容
+  getFileContent (data) {
+    return Axios.post(API.getFileContent, data)
   }
 }

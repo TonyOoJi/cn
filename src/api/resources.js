@@ -9,5 +9,6 @@ export default {
   getCaptcha: `${API_ROOT}/mail/getCaptcha`,
   getDirs: `${API_ROOT}/dir/getDirs`,
   updateDirs: `${API_ROOT}/dir/updateDirs`,
-  addFile: `${API_ROOT}/file/addFile`
+  addFile: `${API_ROOT}/file/addFile`,
+  getFileContent: `${API_ROOT}/file/getFileContent`
 }

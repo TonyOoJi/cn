@@ -23,14 +23,15 @@
           <div class="aside">
             <div class="custom-tree-container">
               <div class="block">
-                <p>文档管理
+                <span style="font-size:120%;">文档管理
                   <el-button size="mini" type="text" @click="appendFolder()">
                     <i class="el-icon-news"></i>
                   </el-button>
                   <el-button size="mini" type="text" @click="appendFile()">
                     <i class="el-icon-document"></i>
                   </el-button>
-                </p>
+                </span><br>
+                <span><i class="el-icon-edit"></i>当前正在编辑： {{currentFileName}} <i class="el-icon-location-outline"></i></span>
                 <div class="dir-tree">
                   <el-tree
                   :data="dirs"
@@ -105,6 +106,7 @@ export default {
       tempRemoveNode: null, // 移除节点临时指向
       tempRemoveData: null, // 移除节点数据临时指向
       currentFileId: 0, // 当前的文件id
+      currentFileName: '',
       content: '', // 当前显示的内容
       dirCount: 0,
       fileCount: 0,
@@ -201,13 +203,20 @@ export default {
     edit () {
       // console.log(this.form.editName)
       // console.log(this.tempDirNodeData.label)
-      this.tempDirNodeData.label = this.form.editName
-      this.updateDirs()
-      this.dialogNewNameVisible = false
-      this.tempDirNodeData = null
-      this.form.editName = ''
+      if (!this.form.editName === '') {
+        this.tempDirNodeData.label = this.form.editName
+        this.updateDirs()
+        this.dialogNewNameVisible = false
+        this.tempDirNodeData = null
+        this.form.editName = ''
+      } else {
+        this.$message({
+          message: '不输入是不行的',
+          type: 'warning'
+        })
+      }
     },
-    showDialog (data) {
+    showEditDialog (data) {
       this.dialogNewNameVisible = true
       this.tempDirNodeData = data
     },
@@ -218,6 +227,21 @@ export default {
         'file_id': this.fileCount
       }
       abe.addFile(params)
+    },
+    // 显示并编辑文档
+    showMavonEditor (data) {
+      this.currentFileId = data.file_id
+      this.currentFileName = data.label
+      var params = {
+        'username': sessionStorage.getItem('username'),
+        'file_id': this.currentFileId
+      }
+      abe.getFileContent(params).then(res => {
+        // alert('success')
+        this.content = res.data.content
+      }).catch(err => {
+        console.log(err)
+      })
     },
 
     show (data) {
@@ -235,7 +259,7 @@ export default {
               <el-button size="mini" type="text" on-click={ () => this.appendChildFile(data) }>
                 <i class="el-icon-document"></i>
               </el-button>
-              <el-button size="mini" type="text" on-click={ () => { this.showDialog(data) } }>
+              <el-button size="mini" type="text" on-click={ () => { this.showEditDialog(data) } }>
                 <i class="el-icon-edit"></i>
               </el-button>
               <el-button size="mini" type="text" on-click={ () => this.verifyRemove(node, data) }>
@@ -247,9 +271,9 @@ export default {
         )
       } else if (data.type === 'file') {
         return (
-          <span class="custom-tree-node" on-mouseover={ (e) => { e.currentTarget.getElementsByTagName('span')[0].style.display = '' } } on-mouseout={ (e) => { e.currentTarget.getElementsByTagName('span')[0].style.display = 'none' } }>
+          <span class="custom-tree-node" on-click={ () => this.showMavonEditor(data) } on-mouseover={ (e) => { e.currentTarget.getElementsByTagName('span')[0].style.display = '' } } on-mouseout={ (e) => { e.currentTarget.getElementsByTagName('span')[0].style.display = 'none' } }>
             <span style="display:none;margin-left:0px;">
-              <el-button size="mini" type="text" on-click={ () => { this.showDialog(data) } }>
+              <el-button size="mini" type="text" on-click={ () => { this.showEditDialog(data) } }>
                 <i class="el-icon-edit"></i>
               </el-button>
               <el-button size="mini" type="text" on-click={ () => this.verifyRemove(node, data) }>
