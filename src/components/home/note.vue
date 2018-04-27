@@ -203,7 +203,7 @@ export default {
     edit () {
       // console.log(this.form.editName)
       // console.log(this.tempDirNodeData.label)
-      if (!this.form.editName === '') {
+      if (this.form.editName.length !== 0) {
         this.tempDirNodeData.label = this.form.editName
         this.updateDirs()
         this.dialogNewNameVisible = false
