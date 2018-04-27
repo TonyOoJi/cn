@@ -21,5 +21,9 @@ export default {
   // 更新目录到后台
   updateDirs (data) {
     return Axios.post(API.updateDirs, data)
+  },
+  // 增加文件
+  addFile (data) {
+    return Axios.post(API.addFile, data)
   }
 }

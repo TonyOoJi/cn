@@ -56,6 +56,18 @@
         </el-col>
       </el-row><!-- 工作区域 -->
     <!-- main -->
+    <!-- 修改目录名弹框 -->
+    <el-dialog title="修改名称" :visible.sync="dialogNewNameVisible" width='600px'>
+      <el-form v-model="form">
+        <el-form-item label="请填写：" label-width='120px'>
+          <el-input v-model="form.editName"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogNewNameVisible = false">取 消</el-button>
+        <el-button type="primary" @click="edit()">确 定</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -76,6 +88,11 @@ export default {
       // label: '网络有点问题'
     }]
     return {
+      dialogNewNameVisible: false, // 弹框控制显示属性
+      form: {
+        editName: '' // 修改名称的接受变量
+      },
+      tempDirNodeData: null,
       currentFileId: 0, // 当前的文件id
       content: '', // 当前显示的内容
       dirCount: 0,
@@ -142,6 +159,7 @@ export default {
     appendFile () {
       const newFile = { dir_id: ++this.dirCount, label: '新建文件', type: 'file', file_id: ++this.fileCount }
       this.dirs.push(newFile)
+      this.addFileToDB()
       this.updateDirs()
     },
     // 新建子文件
@@ -151,6 +169,7 @@ export default {
         this.$set(data, 'children', [])
       }
       data.children.push(newChild)
+      this.addFileToDB()
       this.updateDirs()
     },
     // 删除文件或文件夹
@@ -162,9 +181,26 @@ export default {
       this.updateDirs()
     },
     // 改名
-    edit (data) {
-      data.label = 'abc'
+    edit () {
+      // console.log(this.form.editName)
+      // console.log(this.tempDirNodeData.label)
+      this.tempDirNodeData.label = this.form.editName
       this.updateDirs()
+      this.dialogNewNameVisible = false
+      this.tempDirNodeData = null
+      this.form.editName = ''
+    },
+    showDialog (data) {
+      this.dialogNewNameVisible = true
+      this.tempDirNodeData = data
+    },
+    // 新增文件后上传后台
+    addFileToDB () {
+      var params = {
+        'username': sessionStorage.getItem('username'),
+        'file_id': this.fileCount
+      }
+      abe.addFile(params)
     },
 
     show (data) {
@@ -182,7 +218,7 @@ export default {
               <el-button size="mini" type="text" on-click={ () => this.appendChildFile(data) }>
                 <i class="el-icon-document"></i>
               </el-button>
-              <el-button size="mini" type="text" on-click={ () => this.edit(data) }>
+              <el-button size="mini" type="text" on-click={ () => { this.showDialog(data) } }>
                 <i class="el-icon-edit"></i>
               </el-button>
               <el-button size="mini" type="text" on-click={ () => this.remove(node, data) }>
@@ -196,7 +232,7 @@ export default {
         return (
           <span class="custom-tree-node" on-mouseover={ (e) => { e.currentTarget.getElementsByTagName('span')[0].style.display = '' } } on-mouseout={ (e) => { e.currentTarget.getElementsByTagName('span')[0].style.display = 'none' } }>
             <span style="display:none;margin-left:0px;">
-              <el-button size="mini" type="text" on-click={ () => this.edit(data) }>
+              <el-button size="mini" type="text" on-click={ () => { this.showDialog(data) } }>
                 <i class="el-icon-edit"></i>
               </el-button>
               <el-button size="mini" type="text" on-click={ () => this.remove(node, data) }>
@@ -257,6 +293,7 @@ export default {
   height: 450px;
   overflow: auto;
   text-align: left;
+  margin-left: 20px;
 }
 .editor-col {
   height: 100%;

@@ -8,5 +8,6 @@ export default {
   register: `${API_ROOT}/user/register`,
   getCaptcha: `${API_ROOT}/mail/getCaptcha`,
   getDirs: `${API_ROOT}/dir/getDirs`,
-  updateDirs: `${API_ROOT}/dir/updateDirs`
+  updateDirs: `${API_ROOT}/dir/updateDirs`,
+  addFile: `${API_ROOT}/file/addFile`
 }
