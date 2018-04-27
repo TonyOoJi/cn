@@ -23,15 +23,23 @@
           <div class="aside">
             <div class="custom-tree-container">
               <div class="block">
-                <p>文档管理</p>
+                <p>文档管理
+                  <el-button size="mini" type="text" @click="appendFolder()">
+                    <i class="el-icon-news"></i>
+                  </el-button>
+                  <el-button size="mini" type="text" @click="appendFile()">
+                    <i class="el-icon-document"></i>
+                  </el-button>
+                </p>
                 <el-tree
                 :data="dirs"
                 node-key="dir_id"
                 :highlight-current="true"
                 :default-expand-all="true"
-                :expand-on-click-node="true"
+                :expand-on-click-node="false"
                 :render-content="renderContent">
                 </el-tree>
+                <!-- draggable @node-drop="refreshDirs" -->
               </div>
             </div>
           </div>
@@ -60,9 +68,9 @@ export default {
   },
   data () {
     const data = [{
-      id: 1,
-      content_id: 'test content9527',
-      label: '网络有点问题'
+      // id: 1,
+      // content_id: 'test content9527',
+      // label: '网络有点问题'
     }]
     return {
       currentFileId: 0, // 当前的文件id
@@ -112,8 +120,14 @@ export default {
         console.log(err)
       })
     },
-
-    appendFolder (data) {
+    // 新建顶级文件夹
+    appendFolder () {
+      const newFolder = { dir_id: ++this.dirCount, label: '新建文件夹', type: 'folder', children: [] }
+      this.dirs.push(newFolder)
+      this.updateDirs()
+    },
+    // 新建子文件夹
+    appendChildFolder (data) {
       const newChild = { dir_id: ++this.dirCount, label: '新建文件夹', type: 'folder' }
       if (!data.children) {
         this.$set(data, 'children', [])
@@ -121,12 +135,32 @@ export default {
       data.children.push(newChild)
       this.updateDirs()
     },
-
+    // 新建顶级文件
+    appendFile () {
+      const newFile = { dir_id: ++this.dirCount, label: '新建文件', type: 'file', file_id: ++this.fileCount }
+      this.dirs.push(newFile)
+      this.updateDirs()
+    },
+    // 新建子文件
+    appendChildFile (data) {
+      const newChild = { dir_id: ++this.dirCount, label: '新建文件', type: 'file', file_id: ++this.fileCount }
+      if (!data.children) {
+        this.$set(data, 'children', [])
+      }
+      data.children.push(newChild)
+      this.updateDirs()
+    },
+    // 删除文件或文件夹
     remove (node, data) {
       const parent = node.parent
       const children = parent.data.children || parent.data
       const index = children.findIndex(d => d.dir_id === data.dir_id) // d是children，对其进行了遍历并找到符合的元素的位置
       children.splice(index, 1)
+      this.updateDirs()
+    },
+    // 改名
+    edit (data) {
+      data.label = 'abc'
       this.updateDirs()
     },
 
@@ -135,18 +169,44 @@ export default {
     },
 
     renderContent (h, { node, data, store }) {
-      return (
-        <span class="custom-tree-node">
-          <span>{node.label}</span>
-          <span>
-            <el-button size="mini" type="text" on-click={ () => this.show(data) }>ShowMsg</el-button>
-            <el-button size="mini" type="text" on-click={ () => this.appendFolder(data) }>appendFolder</el-button>
-            <el-button size="mini" type="text" on-click={ () => this.remove(node, data) }><i class="el-icon-delete"></i></el-button>
+      if (data.type === 'folder') {
+        return (
+          <span class="custom-tree-node" on-mouseover={ (e) => { e.currentTarget.getElementsByTagName('span')[1].style.display = '' } } on-mouseout={ (e) => { e.currentTarget.getElementsByTagName('span')[1].style.display = 'none' } }>
+            <span>{node.label}</span>
+            <span style="display:none;margin-left:50px;">
+              <el-button size="mini" type="text" on-click={ () => this.appendChildFolder(data) }>
+                <i class="el-icon-news"></i>
+              </el-button>
+              <el-button size="mini" type="text" on-click={ () => this.appendChildFile(data) }>
+                <i class="el-icon-document"></i>
+              </el-button>
+              <el-button size="mini" type="text" on-click={ () => this.edit(data) }>
+                <i class="el-icon-edit"></i>
+              </el-button>
+              <el-button size="mini" type="text" on-click={ () => this.remove(node, data) }>
+                <i class="el-icon-delete"></i>
+              </el-button>
+            </span>
           </span>
-        </span>
-      )
+        )
+      } else if (data.type === 'file') {
+        return (
+          <span class="custom-tree-node" on-mouseover={ (e) => { e.currentTarget.getElementsByTagName('span')[1].style.display = '' } } on-mouseout={ (e) => { e.currentTarget.getElementsByTagName('span')[1].style.display = 'none' } }>
+            <span>{node.label}</span>
+            <span style="display:none;margin-left:50px;">
+              <el-button size="mini" type="text" on-click={ () => this.edit(data) }>
+                <i class="el-icon-edit"></i>
+              </el-button>
+              <el-button size="mini" type="text" on-click={ () => this.remove(node, data) }>
+                <i class="el-icon-delete"></i>
+              </el-button>
+            </span>
+          </span>
+        )
+      }
     }
   }
+
 }
 </script>
 <style scoped>
@@ -205,5 +265,13 @@ export default {
 }
 .bg-light {
   background-color: #f8f2f8;
+}
+.custom-tree-node {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 14px;
+  padding-right: 8px;
 }
 </style>
