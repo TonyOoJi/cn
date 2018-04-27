@@ -68,6 +68,14 @@
         <el-button type="primary" @click="edit()">确 定</el-button>
       </div>
     </el-dialog>
+    <!-- 删除确认框 -->
+    <el-dialog title="移除节点" :visible.sync="dialogRemoveVisible" width='400px'>
+      <span style="font-size:160%;">确定要删除吗？你这样做会删除此节点及下级所有节点的！</span>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogRemoveVisible = false">取 消</el-button>
+        <el-button type="primary" @click="remove()">确 定</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -89,10 +97,13 @@ export default {
     }]
     return {
       dialogNewNameVisible: false, // 弹框控制显示属性
+      dialogRemoveVisible: false, // 弹窗确认删除
       form: {
         editName: '' // 修改名称的接受变量
       },
-      tempDirNodeData: null,
+      tempDirNodeData: null, // 修改名字临时节点
+      tempRemoveNode: null, // 移除节点临时指向
+      tempRemoveData: null, // 移除节点数据临时指向
       currentFileId: 0, // 当前的文件id
       content: '', // 当前显示的内容
       dirCount: 0,
@@ -173,12 +184,18 @@ export default {
       this.updateDirs()
     },
     // 删除文件或文件夹
-    remove (node, data) {
-      const parent = node.parent
+    remove () {
+      const parent = this.tempRemoveNode.parent
       const children = parent.data.children || parent.data
-      const index = children.findIndex(d => d.dir_id === data.dir_id) // d是children，对其进行了遍历并找到符合的元素的位置
+      const index = children.findIndex(d => d.dir_id === this.tempRemoveData.dir_id) // d是children，对其进行了遍历并找到符合的元素的位置
       children.splice(index, 1)
       this.updateDirs()
+      this.dialogRemoveVisible = false
+    },
+    verifyRemove (node, data) {
+      this.tempRemoveNode = node
+      this.tempRemoveData = data
+      this.dialogRemoveVisible = true
     },
     // 改名
     edit () {
@@ -221,7 +238,7 @@ export default {
               <el-button size="mini" type="text" on-click={ () => { this.showDialog(data) } }>
                 <i class="el-icon-edit"></i>
               </el-button>
-              <el-button size="mini" type="text" on-click={ () => this.remove(node, data) }>
+              <el-button size="mini" type="text" on-click={ () => this.verifyRemove(node, data) }>
                 <i class="el-icon-delete"></i>
               </el-button>
             </span>
@@ -235,7 +252,7 @@ export default {
               <el-button size="mini" type="text" on-click={ () => { this.showDialog(data) } }>
                 <i class="el-icon-edit"></i>
               </el-button>
-              <el-button size="mini" type="text" on-click={ () => this.remove(node, data) }>
+              <el-button size="mini" type="text" on-click={ () => this.verifyRemove(node, data) }>
                 <i class="el-icon-delete"></i>
               </el-button>
             </span>
