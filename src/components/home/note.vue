@@ -30,7 +30,7 @@
                   <el-button size="mini" type="text" @click="appendFile()">
                     <i class="el-icon-document"></i>
                   </el-button>
-                </span><br>
+                </span><br><br>
                 <span><i class="el-icon-edit"></i>当前正在编辑： {{currentFileName}} <i class="el-icon-location-outline"></i></span>
                 <div class="dir-tree">
                   <el-tree
@@ -377,6 +377,9 @@ export default {
   justify-content: space-between;
   font-size: 14px;
   padding-right: 8px;
+}
+.custom-tree-container {
+  margin-top: 10px;
 }
 .el-tree-mystyle {
   display:inline-block;
