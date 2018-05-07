@@ -82,8 +82,6 @@
 <script>
 import abe from '../../api/axios_back_end'
 import { mavonEditor } from 'mavon-editor'
-// let dirCount = 1000
-// let fileCount = 1000
 
 export default {
   name: 'Note',
