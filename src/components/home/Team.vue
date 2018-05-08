@@ -1,11 +1,11 @@
 <template>
   <div class="team">
     <!-- <mavonEditor :value="value"/> -->
-    <el-row>
+    <el-row style="height:100%;">
         <el-col :span="5">
           <div>sadasdas</div>
         </el-col>
-        <el-col :span="19">
+        <el-col :span="19" style="height:100%;">
           <iframe
             :src="etherpad_frame_src"
             class="etherpad-ifram">
@@ -37,7 +37,8 @@ export default {
 <style scoped>
 .etherpad-ifram {
     width: 98%;
-    height: 516px;
+    /* height: 516px; */
+    height: 100%;
     border-width: 0px;
 }
 .team {

@@ -282,7 +282,7 @@ export default {
                 <i class="el-icon-delete"></i>
               </el-button>
             </span>
-            <span>{node.label}</span>
+            <span><i class="el-icon-news"></i>{node.label}</span>
           </span>
         )
       } else if (data.type === 'file') {
@@ -296,7 +296,7 @@ export default {
                 <i class="el-icon-delete"></i>
               </el-button>
             </span>
-            <span>{node.label}</span>
+            <span><i class="el-icon-tickets"></i>{node.label}</span>
           </span>
         )
       }
