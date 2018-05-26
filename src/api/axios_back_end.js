@@ -33,5 +33,9 @@ export default {
   // 保存文件内容
   updataFile (data) {
     return Axios.post(API.updataFile, data)
+  },
+  // newpad
+  newPad (data) {
+    return Axios.post(API.newPad, data)
   }
 }

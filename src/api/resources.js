@@ -11,5 +11,6 @@ export default {
   updateDirs: `${API_ROOT}/dir/updateDirs`,
   addFile: `${API_ROOT}/file/addFile`,
   getFileContent: `${API_ROOT}/file/getFileContent`,
-  updataFile: `${API_ROOT}/file/updataFile`
+  updataFile: `${API_ROOT}/file/updataFile`,
+  newPad: `${API_ROOT}/pad/getNewPad`
 }
