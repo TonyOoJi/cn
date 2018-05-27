@@ -12,5 +12,6 @@ export default {
   addFile: `${API_ROOT}/file/addFile`,
   getFileContent: `${API_ROOT}/file/getFileContent`,
   updataFile: `${API_ROOT}/file/updataFile`,
-  newPad: `${API_ROOT}/pad/getNewPad`
+  newPad: `${API_ROOT}/pad/getNewPad`,
+  getPads: `${API_ROOT}/pad/getPads`
 }

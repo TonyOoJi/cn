@@ -37,5 +37,8 @@ export default {
   // newpad
   newPad (data) {
     return Axios.post(API.newPad, data)
+  },
+  getPads (data) {
+    return Axios.post(API.getPads, data)
   }
 }

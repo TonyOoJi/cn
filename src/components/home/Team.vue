@@ -4,7 +4,18 @@
     <el-row style="height:100%;">
         <el-col :span="5">
           <div>
-              <el-button class="new-apad" @click="showNewPadDialog()">新建一个协作pad</el-button>
+            <el-button class="new-apad" @click="showNewPadDialog()">新建一个协作pad</el-button>
+            <el-tooltip class="item" effect="dark" content="将协作链接发送给其他人" placement="bottom-end">
+              <el-button style="border:0px;" v-popover:popover><i class="el-icon-share"></i></el-button>
+            </el-tooltip>
+            <el-popover
+              ref="popover"
+              placement="bottom"
+              title="复制给团队成员"
+              width="400"
+              trigger="click"
+              :content="urlNow">
+            </el-popover>
           </div>
           <el-table
             :data="tableData"
@@ -47,23 +58,29 @@ export default {
 //   },
   data () {
     return {
-      etherpad_frame_src: 'http://127.0.0.1:9001/p/iboDjQVTOW?showChat=true&showLineNumbers=true',
-      tableData: [{
-        padname: 'asdasdasd'
-      }],
+      etherpad_frame_src: '',
+      tableData: [],
       dialogNewPadVisible: false, // 弹框控制显示属性
       form: {
         padName: '' // 修改名称的接受变量
-      }
+      },
+      urlNow: '' // 当前pad的url
     }
+  },
+  beforeCreate () {
+    this.$nextTick(function () {
+      // 创建组件前的操作
+      this.refreshPads()
+    })
   },
   computed: {
 
   },
   methods: {
     openPad (row, event, column) {
-      alert(row.padname)
-      this.etherpad_frame_src = 'http://127.0.0.1:9001/p/aaa@4?showChat=true&showLineNumbers=true'
+      this.etherpad_frame_src = row.url + '?showChat=true&showLineNumbers=true&alwaysShowChat=true&userName=' + sessionStorage.getItem('username')
+      this.urlNow = row.url + '?showChat=true&showLineNumbers=true&alwaysShowChat=true'
+      // alert(this.etherpad_frame_src)
     },
     // 显示新建编辑框
     showNewPadDialog (data) {
@@ -82,6 +99,7 @@ export default {
             type: 'success'
           })
           // shuaxin
+          this.refreshPads()
           // this.refreshDirs()
         }).catch(err => {
           console.log(err)
@@ -94,6 +112,17 @@ export default {
           type: 'warning'
         })
       }
+    },
+    // getpads
+    refreshPads () {
+      var params = {
+        'username': sessionStorage.getItem('username')
+      }
+      abe.getPads(params).then(res => {
+        this.tableData = res.data.pads
+      }).catch(err => {
+        console.log(err)
+      })
     }
   }
 }
@@ -110,5 +139,6 @@ export default {
 }
 .new-apad {
     margin-top: 5px;
+    border:0px;
 }
 </style>
