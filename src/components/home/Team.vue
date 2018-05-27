@@ -11,7 +11,7 @@
             <el-popover
               ref="popover"
               placement="bottom"
-              title="复制给团队成员"
+              title="复制以下链接给团队成员"
               width="400"
               trigger="click"
               :content="urlNow">
