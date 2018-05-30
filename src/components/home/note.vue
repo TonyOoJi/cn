@@ -32,6 +32,10 @@
                   </el-button>
                 </span><br><br>
                 <span><i class="el-icon-edit"></i>当前正在编辑： {{currentFileName}} <i class="el-icon-location-outline"></i></span>
+                <el-input
+                  placeholder="搜索文档"
+                  v-model="filterText">
+                </el-input>
                 <div class="dir-tree">
                   <el-tree
                   :data="dirs"
@@ -40,7 +44,9 @@
                   :default-expand-all="true"
                   :expand-on-click-node="false"
                   :render-content="renderContent"
-                  class="el-tree-mystyle">
+                  :filter-node-method="filterNode"
+                  ref="tree"
+                  class="filter-tree el-tree-mystyle">
                   </el-tree>
                 </div>
                 <!-- draggable @node-drop="refreshDirs" -->
@@ -95,6 +101,7 @@ export default {
       // label: '网络有点问题'
     }]
     return {
+      filterText: '',
       dialogNewNameVisible: false, // 弹框控制显示属性
       dialogRemoveVisible: false, // 弹窗确认删除
       form: {
@@ -120,8 +127,16 @@ export default {
   computed: {
 
   },
+  watch: {
+    filterText: function (val) {
+      this.$refs.tree.filter(val)
+    }
+  },
   methods: {
-
+    filterNode (value, data) {
+      if (!value) return true
+      return data.label.indexOf(value) !== -1
+    },
     // 后台获取目录刷新
     refreshDirs () {
       var params = {
