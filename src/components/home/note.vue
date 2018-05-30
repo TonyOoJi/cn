@@ -362,7 +362,7 @@ export default {
   /* border: 0 2 0 0px  black */
 }
 .dir-tree {
-  height: 450px;
+  height: 400px;
   overflow: auto;
   text-align: left;
   margin-left: 20px;
