@@ -35,7 +35,7 @@
                   <i class="el-icon-edit"></i>当前正在编辑： {{currentFileName}}
                   <i class="el-icon-location-outline"></i>
                   <el-tooltip class="item" effect="dark" content="本篇文章发送给其他人" placement="bottom-end">
-                    <el-button size="mini" type="text" plain @click="showShareUrl">
+                    <el-button style="border:0px;" size="mini" type="text" plain @click="showShareUrl">
                       <i class="el-icon-share"></i>
                     </el-button>
                   </el-tooltip>
@@ -145,7 +145,8 @@ export default {
       const h = this.$createElement
       var params = {
         'username': sessionStorage.getItem('username'),
-        'file_id': this.currentFileId
+        'file_id': this.currentFileId,
+        'file_name': this.currentFileName
       }
       abe.getShareUrl(params).then(res => {
         // alert('success')
