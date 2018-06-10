@@ -19,6 +19,7 @@
           </div>
           <el-table
             :data="tableData"
+            highlight-current-row
             style="width: 100%"
             @row-click="openPad">
             <el-table-column
