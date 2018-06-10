@@ -30,8 +30,16 @@
                   <el-button size="mini" type="text" @click="appendFile()">
                     <i class="el-icon-document"></i>
                   </el-button>
-                </span><br><br>
-                <span><i class="el-icon-edit"></i>当前正在编辑： {{currentFileName}} <i class="el-icon-location-outline"></i></span>
+                </span><br>
+                <span>
+                  <i class="el-icon-edit"></i>当前正在编辑： {{currentFileName}}
+                  <i class="el-icon-location-outline"></i>
+                  <el-tooltip class="item" effect="dark" content="本篇文章发送给其他人" placement="bottom-end">
+                    <el-button size="mini" type="text" plain @click="showShareUrl">
+                      <i class="el-icon-share"></i>
+                    </el-button>
+                  </el-tooltip>
+                </span>
                 <el-input
                   placeholder="搜索文档"
                   v-model="filterText">
@@ -133,6 +141,22 @@ export default {
     }
   },
   methods: {
+    showShareUrl () {
+      const h = this.$createElement
+      var params = {
+        'username': sessionStorage.getItem('username'),
+        'file_id': this.currentFileId
+      }
+      abe.getShareUrl(params).then(res => {
+        // alert('success')
+        this.$notify({
+          title: '复制给朋友吧',
+          message: h('i', { style: 'color: black' }, res.data.url)
+        })
+      }).catch(err => {
+        console.log(err)
+      })
+    },
     filterNode (value, data) {
       if (!value) return true
       return data.label.indexOf(value) !== -1

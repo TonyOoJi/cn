@@ -40,5 +40,9 @@ export default {
   },
   getPads (data) {
     return Axios.post(API.getPads, data)
+  },
+  // 获取分享链接
+  getShareUrl (data) {
+    return Axios.post(API.getShareUrl, data)
   }
 }

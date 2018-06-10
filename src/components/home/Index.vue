@@ -9,7 +9,7 @@
         <el-menu style="margin-top:-4%;" :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
           <el-menu-item index="1" style="margin:0 20px 0 20px">笔记</el-menu-item>
           <el-menu-item index="2" style="margin:0 20px 0 20px">协作</el-menu-item>
-          <el-menu-item index="3" style="margin:0 20px 0 20px">分享</el-menu-item>
+          <!-- <el-menu-item index="3" style="margin:0 20px 0 20px">分享</el-menu-item> -->
         </el-menu>
       </el-col>
       <el-col :span="10" class="header-col">
