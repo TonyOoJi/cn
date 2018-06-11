@@ -2,7 +2,7 @@
 <div>
   <!-- <div> id:{{ share_id }} </div><br> -->
   <h2>文章：{{ file_name }}</h2><br>
-  <div>作者：{{username}}   创建时间：{{ create_time }}</div><br>
+  <div>作者：{{username}}</div><div style="margin-top:10px">创建时间：{{ create_data }}</div><br>
   <mavonEditor v-model="content" class="nn"
     :toolbarsFlag="false"
     :subfield="false"
@@ -11,16 +11,16 @@
 </div>
 </template>
 <script>
-// import abe from '../../api/axios_back_end'
+import abe from '../../api/axios_back_end'
 import { mavonEditor } from 'mavon-editor'
 
 export default {
   data () {
     return {
-      file_id: this.$route.params.share_id,
+      share_id: this.$route.params.share_id,
       file_name: '',
       username: '',
-      create_time: '',
+      create_data: '',
       content: ''
     }
   },
@@ -38,17 +38,28 @@ export default {
   },
   methods: {
     getSharePage () {
-
+      var params = {
+        'share_id': this.share_id
+      }
+      abe.getSharePage(params).then(res => {
+        // alert('success')
+        this.file_name = res.data.file_name
+        this.username = res.data.username
+        this.content = res.data.content
+        this.create_data = res.data.create_data
+      }).catch(err => {
+        console.log(err)
+      })
     }
   }
 }
 </script>
 <style scoped>
 .nn {
-    margin: 0 auto;
+  margin: 0 auto;
   min-height: 300px;
   min-width: 300px;
-  width: 80%;
+  width: 70%;
   height: 100%;
 }
 .nn>>>.v-note-op {
