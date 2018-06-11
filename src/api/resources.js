@@ -14,5 +14,6 @@ export default {
   updataFile: `${API_ROOT}/file/updataFile`,
   newPad: `${API_ROOT}/pad/getNewPad`,
   getPads: `${API_ROOT}/pad/getPads`,
-  getShareUrl: `${API_ROOT}/share/getShareUrl`
+  getShareUrl: `${API_ROOT}/share/getShareUrl`,
+  getSharePage: `${API_ROOT}/share/getSharePage`
 }

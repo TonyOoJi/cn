@@ -44,5 +44,9 @@ export default {
   // 获取分享链接
   getShareUrl (data) {
     return Axios.post(API.getShareUrl, data)
+  },
+  // getsharepage
+  getSharePage (data) {
+    return Axios.post(API.getSharePage, data)
   }
 }
