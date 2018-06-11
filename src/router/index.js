@@ -5,6 +5,7 @@ import API from '../api/resources'
 import Login from '@/components/login/Login'
 import Register from '@/components/login/Register'
 import Index from '@/components/home/index'
+import SharePage from '@/components/page/sharePage'
 
 Vue.use(Router)
 
@@ -43,6 +44,11 @@ export default new Router({
             })
         }
       }
+    },
+    {
+      path: '/share/:share_id',
+      name: 'sharePage',
+      component: SharePage
     }
   ]
 })
