@@ -74,8 +74,10 @@ export default {
           // store.dispatch('showLogin')
           showMsg(that, true, '登录成功', 'success')
           router.push({path: '/cn/index', params: { username: res.data.username }})
-        } else {
+        } else if (res.data.code === 4) {
           showMsg(that, true, '登录失败，账号或密码错误', 'error')
+        } else if (res.data.code === 8) {
+          showMsg(that, true, '您违反了用户协议，现已被封号处理，请联系管理员', 'error')
         }
       }).catch(err => {
         console.log(err)
