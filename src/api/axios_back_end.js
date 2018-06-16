@@ -48,5 +48,9 @@ export default {
   // getsharepage
   getSharePage (data) {
     return Axios.post(API.getSharePage, data)
+  },
+  // 举报
+  complaint (data) {
+    return Axios.post(API.complaint, data)
   }
 }

@@ -1,7 +1,10 @@
 <template>
 <div>
   <!-- <div> id:{{ share_id }} </div><br> -->
-  <h2>文章：{{ file_name }}</h2><br>
+  <div>如果对内容有问题可以举报<el-tooltip class="item" effect="dark" content="点击举报" placement="bottom-end">
+    <el-button style="border:0px;" @click="complaint()"><i class="el-icon-warning"></i>举报</el-button>
+  </el-tooltip></div>
+  <h2>文章：{{ file_name }}</h2>
   <div>作者：{{username}}</div><div style="margin-top:10px">创建时间：{{ create_data }}</div><br>
   <mavonEditor v-model="content" class="nn"
     :toolbarsFlag="false"
@@ -47,6 +50,21 @@ export default {
         this.username = res.data.username
         this.content = res.data.content
         this.create_data = res.data.create_data
+      }).catch(err => {
+        console.log(err)
+      })
+    },
+    // 举报
+    complaint () {
+      var params = {
+        'share_id': this.share_id
+      }
+      abe.complaint(params).then(res => {
+        // alert('success')
+        this.$message({
+          message: '举报成功，等待管理员审核',
+          type: 'success'
+        })
       }).catch(err => {
         console.log(err)
       })

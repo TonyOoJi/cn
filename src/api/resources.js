@@ -15,5 +15,6 @@ export default {
   newPad: `${API_ROOT}/pad/getNewPad`,
   getPads: `${API_ROOT}/pad/getPads`,
   getShareUrl: `${API_ROOT}/share/getShareUrl`,
-  getSharePage: `${API_ROOT}/share/getSharePage`
+  getSharePage: `${API_ROOT}/share/getSharePage`,
+  complaint: `${API_ROOT}/share/complaint`
 }
