@@ -20,6 +20,7 @@
               <el-button style="border:0px;" @click="deletePad()"><i class="el-icon-delete"></i></el-button>
             </el-tooltip>
           </div>
+          <div style="height: 460px;overflow: auto;">
           <el-table
             :data="tableData"
             highlight-current-row
@@ -31,6 +32,7 @@
               style="width: 100%">
             </el-table-column>
           </el-table>
+          </div>
         </el-col>
         <el-col :span="19" style="height:100%;">
           <iframe
@@ -69,7 +71,8 @@ export default {
         padName: '' // 修改名称的接受变量
       },
       urlNow: '', // 当前pad的url
-      padid: ''
+      padid: '',
+      padname: '' // 当前
     }
   },
   beforeCreate () {
@@ -87,6 +90,7 @@ export default {
       this.urlNow = row.url + '?showChat=true&showLineNumbers=true&alwaysShowChat=true'
       // alert(this.etherpad_frame_src)
       this.padid = row.padid
+      this.padname = row.padname
     },
     // 显示新建编辑框
     showNewPadDialog (data) {
@@ -100,10 +104,17 @@ export default {
           'newPadName': this.form.padName
         }
         abe.newPad(params).then(res => {
-          this.$message({
-            message: '成功',
-            type: 'success'
-          })
+          if (res.data.code === 0) {
+            this.$message({
+              message: '成功',
+              type: 'success'
+            })
+          } else {
+            this.$message({
+              message: '名称重复，请重新命名',
+              type: 'error'
+            })
+          }
           // shuaxin
           this.refreshPads()
           // this.refreshDirs()
@@ -130,9 +141,12 @@ export default {
         console.log(err)
       })
     },
+    // delete
     deletePad () {
       var params = {
-        'padid': this.padid
+        'padid': this.padid,
+        'username': sessionStorage.getItem('username'),
+        'padname': this.padname
       }
       abe.deleltePad(params).then(res => {
         this.refreshPads()
