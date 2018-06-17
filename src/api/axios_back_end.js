@@ -52,5 +52,9 @@ export default {
   // 举报
   complaint (data) {
     return Axios.post(API.complaint, data)
+  },
+  // deleltePad
+  deleltePad (data) {
+    return Axios.post(API.deletePad, data)
   }
 }

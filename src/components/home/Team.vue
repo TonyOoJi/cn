@@ -4,7 +4,7 @@
     <el-row style="height:100%;">
         <el-col :span="5">
           <div>
-            <el-button class="new-apad" @click="showNewPadDialog()">新建一个协作pad</el-button>
+            <el-button class="new-apad" @click="showNewPadDialog()">新建一个协作</el-button>
             <el-tooltip class="item" effect="dark" content="将协作链接发送给其他人" placement="bottom-end">
               <el-button style="border:0px;" v-popover:popover><i class="el-icon-share"></i></el-button>
             </el-tooltip>
@@ -16,6 +16,9 @@
               trigger="click"
               :content="urlNow">
             </el-popover>
+            <el-tooltip class="item" effect="dark" content="删除当前协作" placement="bottom-end">
+              <el-button style="border:0px;" @click="deletePad()"><i class="el-icon-delete"></i></el-button>
+            </el-tooltip>
           </div>
           <el-table
             :data="tableData"
@@ -65,7 +68,8 @@ export default {
       form: {
         padName: '' // 修改名称的接受变量
       },
-      urlNow: '' // 当前pad的url
+      urlNow: '', // 当前pad的url
+      padid: ''
     }
   },
   beforeCreate () {
@@ -82,6 +86,7 @@ export default {
       this.etherpad_frame_src = row.url + '?showChat=true&showLineNumbers=true&alwaysShowChat=true&userName=' + sessionStorage.getItem('username')
       this.urlNow = row.url + '?showChat=true&showLineNumbers=true&alwaysShowChat=true'
       // alert(this.etherpad_frame_src)
+      this.padid = row.padid
     },
     // 显示新建编辑框
     showNewPadDialog (data) {
@@ -121,6 +126,16 @@ export default {
       }
       abe.getPads(params).then(res => {
         this.tableData = res.data.pads
+      }).catch(err => {
+        console.log(err)
+      })
+    },
+    deletePad () {
+      var params = {
+        'padid': this.padid
+      }
+      abe.deleltePad(params).then(res => {
+        this.refreshPads()
       }).catch(err => {
         console.log(err)
       })

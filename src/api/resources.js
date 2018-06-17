@@ -16,5 +16,6 @@ export default {
   getPads: `${API_ROOT}/pad/getPads`,
   getShareUrl: `${API_ROOT}/share/getShareUrl`,
   getSharePage: `${API_ROOT}/share/getSharePage`,
-  complaint: `${API_ROOT}/share/complaint`
+  complaint: `${API_ROOT}/share/complaint`,
+  deletePad: `${API_ROOT}/pad/deletePad`
 }
